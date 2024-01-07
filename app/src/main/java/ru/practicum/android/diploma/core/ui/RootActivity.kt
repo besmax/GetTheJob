@@ -1,87 +1,41 @@
 package ru.practicum.android.diploma.core.ui
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.Toolbar
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.core.os.LocaleListCompat
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.ActivityRootBinding
+import ru.practicum.android.diploma.core.ui.theme.GetTheJobTheme
 
 @AndroidEntryPoint
 class RootActivity : AppCompatActivity() {
-
-    private val binding: ActivityRootBinding by lazy { ActivityRootBinding.inflate(layoutInflater) }
-
-    val toolbar: Toolbar
-        get() = binding.toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLocale()
 
-        setContentView(binding.root)
+        setContent {
+            GetTheJobTheme {
+                val navController = rememberNavController()
+                var bottomNavBarIsVisible = rememberSaveable { mutableStateOf(true) }
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
 
-        setupToolbar()
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.root_fragment_container_view) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        binding.bottomNavigationView.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.teamFragment,
-                R.id.favoritesFragment,
-                R.id.searchFragment -> {
-                    binding.bottomNavigationView.visibility = View.VISIBLE
-                    binding.bottomNavigationViewLineAbove.visibility = View.VISIBLE
-                }
-
-                else -> {
-                    binding.bottomNavigationView.visibility = View.GONE
-                    binding.bottomNavigationViewLineAbove.visibility = View.GONE
+                when (navBackStackEntry?.destination?.route) {
+//                    Screen.SettingsScreen.route -> bottomNavBarIsVisible.value = true
+//                    Screen.MediatekaScreen.route -> bottomNavBarIsVisible.value = true
+//                    Screen.SearchScreen.route -> bottomNavBarIsVisible.value = true
+//                    Screen.PlayerScreen.route -> bottomNavBarIsVisible.value = false
+//                    Screen.NewPlaylistScreen.route -> bottomNavBarIsVisible.value = false
+//                    Screen.PlaylistDetailsScreen.route -> bottomNavBarIsVisible.value = false
                 }
             }
         }
-    }
-
-    /**
-     * Toolbar
-     *
-     * Прикрепление navigationIcon:
-     *
-     *         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back) в onResume()
-     *         binding.toolbar.navigationIcon = null в onPause()
-     *
-     * Смена иконки:
-     *
-     *      menu.findItem(R.id.favorite).setIcon(R.drawable.ic_favorite_active)
-     *
-     * Смена видимости пункта меню:
-     *
-     *      item.isVisible =
-     *      false в onPause()
-     *      true в onResume()
-     *
-     * Смена текста в title:
-     *      toolbar.setTitle()
-     * OnClick:
-     *
-     *      item.setOnMenuItemClickListener { MenuItem ->
-     *          // doSomething()
-     *          true
-     *      }
-     */
-
-    private fun setupToolbar() {
-        menuInflater.inflate(R.menu.toolbar_menu, binding.toolbar.menu)
-        binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     private fun setLocale() {
