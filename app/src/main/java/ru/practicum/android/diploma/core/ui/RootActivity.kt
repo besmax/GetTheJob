@@ -29,6 +29,9 @@ class RootActivity : AppCompatActivity() {
 
                 when (navBackStackEntry?.destination?.route) {
                     Destination.Search.route -> bottomNavBarIsVisible.value = true
+                    Destination.Favorite.route -> bottomNavBarIsVisible.value = true
+                    Destination.Team.route -> bottomNavBarIsVisible.value = true
+                    else -> bottomNavBarIsVisible.value = false
                 }
             }
         }
