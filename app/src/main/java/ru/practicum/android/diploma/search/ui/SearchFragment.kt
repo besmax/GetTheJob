@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -179,6 +180,7 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
         val resultMessage = resources.getQuantityString(R.plurals.search_result_message, found, found)
         binding.resultMessageTextView.text = resultMessage
         hideContent(resultsFlag = false, resultsMessageFlag = false)
+        hideKeyboard()
     }
 
     private fun setupAdapter() {
@@ -227,6 +229,15 @@ class SearchFragment : BindingFragment<FragmentSearchBinding>() {
                 }
             }
         )
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            activity?.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = requireActivity().currentFocus
+        if (view != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+        }
     }
 
     companion object {
