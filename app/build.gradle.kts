@@ -39,7 +39,11 @@ android {
 
     buildFeatures {
         buildConfig = true
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
 }
 
@@ -76,6 +80,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt)
+    implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     // Room
@@ -99,6 +104,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.animation:animation-graphics")
     implementation("androidx.compose.animation:animation")
+    implementation(libs.runtime.livedata)
+    implementation(libs.lifecycle.viewmodel.compose)
 }
 
 kapt {

@@ -47,7 +47,7 @@ class SearchViewModel @Inject constructor(
     // В эту переменную сохраняется текст первого запроса
     private var lastSearchedText = ""
 
-    private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData(SearchScreenState.Empty)
+    private val _screenState: MutableLiveData<SearchScreenState> = MutableLiveData(SearchScreenState.NotStarted)
     val screenState: LiveData<SearchScreenState>
         get() = _screenState
 
@@ -114,7 +114,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun clearState() {
-        _screenState.postValue(SearchScreenState.Empty)
+        _screenState.postValue(SearchScreenState.NotStarted)
     }
 
     fun refreshSearch() {
