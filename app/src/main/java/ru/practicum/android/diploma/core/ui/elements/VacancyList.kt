@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +21,25 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.core.ui.theme.YsDispalyFamily
 import ru.practicum.android.diploma.search.domain.model.Vacancy
 import ru.practicum.android.diploma.util.getSalaryDescription
+
+@Composable
+fun VacancyList(
+    vacancies: List<Vacancy>,
+    onVacancyClick: (String) -> Unit,
+) {
+
+    LazyColumn(
+        modifier = Modifier
+    ) {
+        items(
+            items = vacancies,
+            key = { vacancy -> vacancy.id }
+        ) { vacancy ->
+            VacancyListItem(vacancy = vacancy, onVacancyClick = onVacancyClick)
+        }
+    }
+
+}
 
 @Composable
 fun VacancyListItem(
