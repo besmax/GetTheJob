@@ -46,7 +46,7 @@ fun BottomNavBar(
     )
 
     AnimatedVisibility(
-        visible = state.value,
+        visible = state,
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it }),
         content = {
